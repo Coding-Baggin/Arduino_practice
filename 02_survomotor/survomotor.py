@@ -16,14 +16,18 @@ while True:
     
     # 입력값이 숫자인지 확인
     if command.isdigit():
-        # 아두이노로 각도 전송 (문자열 전송 후 인코딩)
-        py_serial.write(command.encode())
-        time.sleep(0.1) # 아두이노가 처리할 시간을 잠시 줌
+        py_serial.write(f"{command}\n".encode()) #\n은 끝났다는 의미
+        time.sleep(0.1) 
+        # 아두이노로 write 안에 있는 것 전송! encode를 통해 문자열을 byte로 바꿔줌 
+        # 아두이노가 처리할 시간을 잠시 줌 => 컴퓨터는 연산이 굉장히 빠르지만 아두이노는 처리할 시간이 필요함 
         
         # 아두이노로부터 온 확인 메시지 읽기
-        if py_serial.in_waiting > 0:
-            response = py_serial.readline().decode().rstrip()
-            print(f"아두이노 응답: {response}")
+        if py_serial.in_waiting > 0: 
+        #Serial.available의 python.version =>수신 버퍼에 데이터가 있니, 없는데 readline으로 읽으려고 하면 오류남
+             response = py_serial.readline().decode().rstrip()
+             #readline은 줄바꿈이 있어야 읽음, rstrip이나 strip이나 결과는 같은데 println은 데이터 끝에 줄바꿈 관련 기호들을
+             #보내기 때문에 목적을 명확하게 하기 위해서 rstrip을 사용함
+             print(f"아두이노 응답: {response}")
     else:
         print("0에서 180 사이의 숫자만 입력해주세요.")
 
