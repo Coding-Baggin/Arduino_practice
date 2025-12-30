@@ -25,10 +25,13 @@ void loop() {
     만약 문자가 같이 있다면 available은 0이 되지 않고 문자 갯수로 남아있음 => python에서 isdigit으로 제겅*/
     int angle = Serial.parseInt(); 
     
+    while(Serial.available() > 0) { Serial.read(); } //parseInt가 숫자를 읽고 나서 버퍼에 남긴 \n을 없애줌
+
     // 서보 모터가 움직일 수 있는 범위(0~180)인지 확인
     if (angle >= 0 && angle <= 180) {
       myServo.write(angle); // 모터 회전 명령
       
+      delay(20); //모터가 움직일 시간을 줌
       // 확인을 위해 파이썬으로 응답 보냄
       Serial.print("Moved to: "); 
       //print 함수는 보내기만 하고 줄바꿈은 안함 : 전송 대기줄에 있음(python의 readline 때문)
