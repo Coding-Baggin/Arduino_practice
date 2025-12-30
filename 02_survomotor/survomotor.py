@@ -8,6 +8,7 @@ py_serial = serial.Serial(port='COM3', baudrate=9600, timeout=1)
 print("--- 서보 모터 제어 프로그램 ---")
 print("각도를 입력하세요 (0~180). 종료하려면 'q'를 누르세요.")
 
+
 while True:
     command = input("Angle: ")
     
@@ -16,6 +17,9 @@ while True:
     
     # 입력값이 숫자인지 확인
     if command.isdigit():
+
+        py_serial.reset_input_buffer() #명령을 내리기 전에 우편함에 쌓여 있던 데이터 버림
+
         py_serial.write(f"{command}\n".encode()) #\n은 끝났다는 의미
         time.sleep(0.1) 
         # 아두이노로 write 안에 있는 것 전송! encode를 통해 문자열을 byte로 바꿔줌 

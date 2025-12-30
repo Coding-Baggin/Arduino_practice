@@ -6,6 +6,9 @@ Servo myServo;  // 서보 모터 객체 생성
 
 void setup() {
   Serial.begin(9600); // 파이썬과 대화할 통로
+  Serial.setTimeout(10); //parseInt가 숫자를 기다리는 시간을 1초에서 0.01초로 단축
+  /*이렇게 하지 않으면 parseInt가 120을 보고 \n를 읽기전까지 잠깐 멈추는 그 1초 사이에 python이 in_waiting
+  buffer를 읽게 됨으로써 바로 전의 응답을 읽지 못하고 이전의 응답을 읽게됨)*/
   myServo.attach(9);  // 9번 핀에 서보 모터 연결, 설계도가 있는 myServo가 어디에 연결되어 있는지를 설정
   myServo.write(90);  
   // 시작할 때 정중앙(90도) 보기, 90도가 직진 상태임, 이거 없으면 마지막 각도 그대로 있거나 전원이 들어오면 무작위로 튈 수 있음
