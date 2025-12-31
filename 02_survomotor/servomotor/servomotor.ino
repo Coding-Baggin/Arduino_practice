@@ -15,7 +15,9 @@ void loop() {
   if (Serial.available() > 0) {
     int angle = Serial.parseInt(); 
     
-    while(Serial.available() > 0) { Serial.read(); } 
+    while(Serial.available() > 0){ 
+      Serial.read(); 
+      } 
 
     if (angle >= 0 && angle <= 180) {
       myServo.write(angle); 
